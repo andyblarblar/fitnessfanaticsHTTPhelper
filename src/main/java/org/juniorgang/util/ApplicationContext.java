@@ -1,10 +1,9 @@
+package org.juniorgang.util;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.net.URI;
 import java.util.Scanner;
 
 /**
@@ -30,10 +29,10 @@ public class ApplicationContext {
      * parses configs.txt at resources/configs.txt for settings.
      * format:
      * "server:": the line following indicates the full URI of the server
-     *
-     * @return an instance of ApplicationContext with settings configured from configs
+     * "auths:" the authorizations to be put in the header. format: "username:password"
+     * @return an instance of org.juniorgang.util.ApplicationContext with settings configured from configs
      */
-    public ApplicationContext initialize(){
+    public static ApplicationContext initialize(){
         String temp;
         String serverAdd = "";
         Client client;

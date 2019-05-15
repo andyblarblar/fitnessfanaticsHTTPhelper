@@ -1,3 +1,4 @@
+package org.juniorgang.util;
 
 public class User {
 
