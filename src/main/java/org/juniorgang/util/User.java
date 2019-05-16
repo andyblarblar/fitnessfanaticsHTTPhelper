@@ -1,5 +1,8 @@
 package org.juniorgang.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 public class User {
 
     private long id;

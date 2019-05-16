@@ -7,11 +7,11 @@ public class runner {
     public static void main(String[] args) {
         HTTPService service = new HTTPService(ApplicationContext.initialize());
         Response response = service.doGET();
-        if (response == null) {
-            System.out.println("sever cannot connect");
+        if (response == null || response.getStatus() != 200) {
+            System.out.println(response.getStatus()+" server cannot connect");
         } else {
-            System.out.println(response.getEntity());
-
+            System.out.println(response.readEntity(User.class).getFname());
+            /*other tests*/
         }
 
     }

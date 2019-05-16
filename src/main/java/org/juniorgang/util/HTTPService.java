@@ -21,7 +21,7 @@ public class HTTPService {
      * @return the full request, null if server is offline
      */
     public Response doGET(){
-        WebTarget trg = context.getClient().path(context.getServerAddress()+"/show");
+        WebTarget trg = context.getClient().path("/show");
         Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization","basic " + context.getAuths());
@@ -33,9 +33,6 @@ public class HTTPService {
             return null;
         }
     }
-
-
-
 
 
 
