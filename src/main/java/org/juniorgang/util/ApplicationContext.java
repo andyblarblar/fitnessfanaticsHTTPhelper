@@ -4,6 +4,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -37,7 +38,8 @@ public class ApplicationContext {
         String serverAdd = "";
         Client client;
         String auths = "";
-        try(Scanner sc = new Scanner(new File("resources/configs.txt"))){
+
+        try(Scanner sc = new Scanner(new File("src/main/resources/configs.txt"))){
 
             while(sc.hasNextLine()){//checks each line for an identifier
 
@@ -56,7 +58,8 @@ public class ApplicationContext {
             }
 
         }
-        catch(Exception e){System.out.println("no configs file found");}
+        catch(Exception e){ System.out.println("no configs file found");}
+
         client = ClientBuilder.newClient();
         WebTarget trg= client.target(serverAdd);
         if (auths.isEmpty()){return new ApplicationContext(serverAdd,trg);}

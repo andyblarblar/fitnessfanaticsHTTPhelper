@@ -4,6 +4,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.ConnectException;
 
 public class HTTPService {
 
@@ -17,14 +18,20 @@ public class HTTPService {
 
     /**
      * sends a get request to the server configured in {@link ApplicationContext} with authorizations
-     * @return the full request
+     * @return the full request, null if server is offline
      */
     public Response doGET(){
-        WebTarget trg = context.getClient().path("/show");
+        WebTarget trg = context.getClient().path(context.getServerAddress()+"/show");
         Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Authorization","basic " + context.getAuths());
-        return builder.get();
+        try {
+            return builder.get();
+        }
+        catch (Exception e){
+            System.out.println("the server refused to connect");
+            return null;
+        }
     }
 
 
