@@ -7,15 +7,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.ConnectException;
 
+/**
+ * A util class user to perform CRUD operations to the REST database
+ */
 public class HTTPService {
 
     private ApplicationContext context;
 
+    /**
+     * @param context create using ApplicationContext.initialize. Sets the global variables from the configs file.
+     */
     public HTTPService(ApplicationContext context){
         this.context = context;
     }
-
-    //TODO create methods for all forms of CRUD, returning
 
     /**
      * sends a get request to the server configured in {@link ApplicationContext} with authorizations
@@ -53,6 +57,11 @@ public class HTTPService {
         return null;
     }
 
+    /**
+     * performes a PUT request to the server, updating the User associated with the registered auth with
+     * the one passed as a param.
+     * @return the response, null if server is offline
+     */
     public Response doPUT(User user){
         WebTarget trg = context.getClient().path("/update");
         Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
@@ -65,6 +74,26 @@ public class HTTPService {
             e.printStackTrace();}
         return null;
     }
+
+    /**
+     * deletes the auth and user associated with the configured auth. This action is irreversible, and
+     * must be carefully done to avoid state issues.
+     * @return the Response, null if the serve is offline
+     */
+    public Response doDELETE(){
+        WebTarget trg = context.getClient();
+        Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Authorization","basic " + context.getAuths());
+        try{
+            return builder.delete();
+        }
+        catch (Exception e){ System.out.println("the server refused");
+        e.printStackTrace();}
+        return null;
+    }
+
+
 
 
 
