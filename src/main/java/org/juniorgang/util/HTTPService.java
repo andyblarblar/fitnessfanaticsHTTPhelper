@@ -53,6 +53,19 @@ public class HTTPService {
         return null;
     }
 
+    public Response doPUT(User user){
+        WebTarget trg = context.getClient().path("/update");
+        Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Authorization","basic " + context.getAuths());
+        try {
+            return builder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
+        }
+        catch (Exception e){System.out.println("the server refused");
+            e.printStackTrace();}
+        return null;
+    }
+
 
 
 
