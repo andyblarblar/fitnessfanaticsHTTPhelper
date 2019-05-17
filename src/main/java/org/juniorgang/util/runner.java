@@ -2,17 +2,19 @@ package org.juniorgang.util;
 
 import javax.ws.rs.core.Response;
 
-public class runner {
+  class runner {
 
     public static void main(String[] args) {
         HTTPService service = new HTTPService(ApplicationContext.initialize());
+        Response postResponse = service.doPOST(new User("foo","bar"));
         Response response = service.doGET();
-        if (response == null || response.getStatus() != 200) {
-            System.out.println(response.getStatus()+" server cannot connect");
-        } else {
+
+        try {
             System.out.println(response.readEntity(User.class).getFname());
+            System.out.println(postResponse.getStatus());
             /*other tests*/
+        }
+        catch (NullPointerException e){System.out.println(postResponse.getStatus());}
         }
 
     }
-}

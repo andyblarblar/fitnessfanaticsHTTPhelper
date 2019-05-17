@@ -1,5 +1,6 @@
 package org.juniorgang.util;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -32,6 +33,24 @@ public class HTTPService {
             System.out.println("the server refused to connect");
             return null;
         }
+    }
+
+    /**
+     * performs a POST request to the server, including the passed {@link User} as a JSON payload.
+     * This creates a new User AND Auth, use update to change an existing user.
+     * @return the Response, null if server is offline
+     */
+    public Response doPOST(User user){
+        WebTarget trg = context.getClient();
+        Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Authorization","basic " + context.getAuths());
+        try {
+            return builder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+        }
+        catch (Exception e){System.out.println("the server refused");
+        e.printStackTrace();}
+        return null;
     }
 
 

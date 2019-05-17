@@ -2,22 +2,18 @@ package org.juniorgang.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+@JsonIgnoreProperties("id")
 public class User {
+    public User(String fname, String lname) {
+        this.fname = fname;
+        this.lname = lname;
+    }
 
-    private long id;
+    public User() {}
 
     private String fname;
 
     private String lname;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFname() {
         return fname;
@@ -35,4 +31,10 @@ public class User {
         this.lname = lname;
     }
 
+    @Override
+    public String toString() {
+        return "User{ 'fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                '}';
+    }
 }
