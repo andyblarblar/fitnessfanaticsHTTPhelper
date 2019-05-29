@@ -150,11 +150,15 @@ public class HTTPService {
             in.write("auths:\n"+auths);
             in.append("\nserver:\n").append(serverAdd);//server
         }
-
-
     }
 
+    public String getAuths(){
+        return this.context.getAuths();
+    }
 
+    public String getServerAddress(){
+        return this.context.getServerAddress();
+    }
 
 
 
