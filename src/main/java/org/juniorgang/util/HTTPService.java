@@ -5,7 +5,9 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
 import java.net.ConnectException;
+import java.util.Scanner;
 
 /**
  * A util class user to perform CRUD operations to the REST database
@@ -91,6 +93,65 @@ public class HTTPService {
         catch (Exception e){ System.out.println("the server refused");
         e.printStackTrace();}
         return null;
+    }
+
+    /**
+     * tests the auths
+     * @return true if auths are usable
+     */
+    public boolean testAuths(){
+        if(doGET().getStatus() != 200) return false;
+        return true;
+    }
+
+    /**
+     * sets the authorizations in memory and on disk.
+     * @param auths the auths seperated as ".* .*"  or "username password"
+     */
+    public void setAuths(String auths){
+        auths = auths.replace(' ',':');//replace spaces with a colon
+        this.context.setAuths(auths);//sets in memory
+
+        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
+            in.write("auths:\n"+auths);//auths
+            in.append("\nserver:\n").append(context.getServerAddress());//server
+        } catch (IOException e) {
+            /* create configs file */
+        }
+    }
+
+    /**
+     * sets the server adress in memory and on disk formatted for use
+     * @param serverAddress the server ip/adress just raw ip.
+     */
+    public void setServerAddress(String serverAddress){
+        serverAddress = "http://"+serverAddress+"/users";//formating
+
+        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
+            in.write("auths:\n"+this.context.getAuths());//auths
+            in.append("\nserver:\n").append(serverAddress);//server
+        } catch (IOException e) {
+            /* create configs file */
+        }
+    }
+
+    /**
+     * creates the configs file for the first time, needs to be detected in application
+     * @param auths the "username password"
+     * @param serverAdd the raw ip of the server
+     */
+    public static void createConfigsFile(String auths,String serverAdd) throws IOException {
+        File configs = new File("src/main/resources/configs.txt");
+        configs.createNewFile();
+        auths = auths.replace(' ',':');//replace spaces with a colon
+        serverAdd = "http://"+serverAdd+"/users";//formating
+
+        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
+            in.write("auths:\n"+auths);
+            in.append("\nserver:\n").append(serverAdd);//server
+        }
+
+
     }
 
 

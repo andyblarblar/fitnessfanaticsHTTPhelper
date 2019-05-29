@@ -81,4 +81,12 @@ public class ApplicationContext {
     public String getAuths() {
         return auths;
     }
+
+    public void setServerAddress(String serverAddress) {
+        this.serverAddress = serverAddress;
+    }
+
+    public void setAuths(String auths) {
+        this.auths = auths;
+    }
 }
