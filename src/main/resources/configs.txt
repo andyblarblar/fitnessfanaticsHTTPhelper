@@ -1,6 +1,4 @@
-server:
-http://127.0.0.1:8080/users
 auths:
-username2:password2
-
-
+butt
+server:
+http://my mom/users

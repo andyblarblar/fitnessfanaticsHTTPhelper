@@ -96,12 +96,15 @@ public class HTTPService {
     }
 
     /**
-     * tests the auths
+     * tests the auths and if the server is up
      * @return true if auths are usable
      */
     public boolean testAuths(){
-        if(doGET().getStatus() != 200) return false;
-        return true;
+        try {
+            if (doGET().getStatus() != 200) return false;
+            return true;
+        }
+        catch (Exception e){return false;}//return if offline
     }
 
     /**
@@ -121,7 +124,7 @@ public class HTTPService {
     }
 
     /**
-     * sets the server adress in memory and on disk formatted for use
+     * sets the server address in memory and on disk formatted for use
      * @param serverAddress the server ip/adress just raw ip.
      */
     public void setServerAddress(String serverAddress){
@@ -142,7 +145,8 @@ public class HTTPService {
      */
     public static void createConfigsFile(String auths,String serverAdd) throws IOException {
         File configs = new File("src/main/resources/configs.txt");
-        configs.createNewFile();
+        if(configs.createNewFile()){return;}//stops if the file is already made, this meas you can call every boot.
+
         auths = auths.replace(' ',':');//replace spaces with a colon
         serverAdd = "http://"+serverAdd+"/users";//formating
 
