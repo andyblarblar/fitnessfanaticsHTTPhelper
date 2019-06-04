@@ -27,11 +27,9 @@ class runner {
         catch (NullPointerException e){System.out.println(postResponse.getStatus());}
         }
         */
-        try {
+
             HTTPService.createConfigsFile("butt","my mom");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
 
     }

@@ -143,31 +143,39 @@ public class HTTPService {
      * @param auths the "username password"
      * @param serverAdd the raw ip of the server
      */
-    public static void createConfigsFile(String auths,String serverAdd) throws IOException {
+    public static void createConfigsFile(String auths,String serverAdd) {
         File configs = new File("src/main/resources/configs.txt");
-        if(configs.createNewFile()){return;}//stops if the file is already made, this meas you can call every boot.
+        try {
+            if (configs.createNewFile()) {
+                return;
+            }//stops if the file is already made, this meas you can call every boot.
 
-        auths = auths.replace(' ',':');//replace spaces with a colon
-        serverAdd = "http://"+serverAdd+"/users";//formating
+            auths = auths.replace(' ', ':');//replace spaces with a colon
+            serverAdd = "http://" + serverAdd + "/users";//formating
 
-        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
-            in.write("auths:\n"+auths);
-            in.append("\nserver:\n").append(serverAdd);//server
+            try (BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))) {//sets on disk
+                in.write("auths:\n" + auths);
+                in.append("\nserver:\n").append(serverAdd);//server
+            }
         }
+        catch (Exception e){}
     }
-
     /**
      * creates the configs file for the first time, needs to be detected in application. sets all empty.
      */
-    public static void createConfigsFile() throws IOException {
+    public static void createConfigsFile() {
         File configs = new File("src/main/resources/configs.txt");
-        if(configs.createNewFile()){return;}//stops if the file is already made, this meas you can call every boot.
-        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
-            in.write("auths:\n"+"");
-            in.append("\nserver:\n"+"");
+        try {
+            if (configs.createNewFile()) {
+                return;
+            }//stops if the file is already made, this meas you can call every boot.
+            try (BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))) {//sets on disk
+                in.write("auths:\n" + "");
+                in.append("\nserver:\n" + "");
+            }
         }
+        catch (Exception e){}
     }
-
     public String getAuths(){
         return this.context.getAuths();
     }
