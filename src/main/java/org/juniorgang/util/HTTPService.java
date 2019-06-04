@@ -156,6 +156,18 @@ public class HTTPService {
         }
     }
 
+    /**
+     * creates the configs file for the first time, needs to be detected in application. sets all empty.
+     */
+    public static void createConfigsFile() throws IOException {
+        File configs = new File("src/main/resources/configs.txt");
+        if(configs.createNewFile()){return;}//stops if the file is already made, this meas you can call every boot.
+        try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
+            in.write("auths:\n"+"");
+            in.append("\nserver:\n"+"");
+        }
+    }
+
     public String getAuths(){
         return this.context.getAuths();
     }

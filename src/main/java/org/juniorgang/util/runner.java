@@ -1,13 +1,15 @@
 package org.juniorgang.util;
 
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.io.IOException;
 
 class runner {
 
     public static void main(String[] args) {
-
-        HTTPService service = new HTTPService(ApplicationContext.initialize());
+        if(new File("src/main/resources/configs.txt").exists()) {
+            HTTPService service = new HTTPService(ApplicationContext.initialize());
+        }
         /*
         Response postResponse = service.doPOST(new User("foo","bar"));
         Response response = service.doGET();
@@ -30,7 +32,7 @@ class runner {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        service.testAuths();
+
 
     }
   }

@@ -1,4 +1,0 @@
-auths:
-butt
-server:
-http://my mom/users
