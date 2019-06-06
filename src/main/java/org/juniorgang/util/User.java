@@ -3,8 +3,11 @@ package org.juniorgang.util;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties("id")
-public class User {
-    public User(String fname, String lname) {
+/**
+ * an extendable class that simply has the id property igonered. should match the server model.
+ */
+public abstract class User {
+    /*public User(String fname, String lname) {
         this.fname = fname;
         this.lname = lname;
     }
@@ -36,5 +39,5 @@ public class User {
         return "User{ 'fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
                 '}';
-    }
+    }*/
 }

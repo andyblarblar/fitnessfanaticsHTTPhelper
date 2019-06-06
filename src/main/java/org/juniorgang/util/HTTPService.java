@@ -46,7 +46,7 @@ public class HTTPService {
      * This creates a new User AND Auth, use update to change an existing user.
      * @return the Response, null if server is offline
      */
-    public Response doPOST(User user){
+    public <T> Response doPOST(T user){
         WebTarget trg = context.getClient();
         Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -64,7 +64,7 @@ public class HTTPService {
      * the one passed as a param.
      * @return the response, null if server is offline
      */
-    public Response doPUT(User user){
+    public <T> Response doPUT(T user){
         WebTarget trg = context.getClient().path("/update");
         Invocation.Builder builder = trg.request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -128,7 +128,7 @@ public class HTTPService {
      * @param serverAddress the server ip/adress just raw ip.
      */
     public void setServerAddress(String serverAddress){
-        serverAddress = "http://"+serverAddress+"/users";//formating
+        serverAddress = "http://"+serverAddress+":8080/users";//formating
 
         try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
             in.write("auths:\n"+this.context.getAuths());//auths
@@ -136,6 +136,7 @@ public class HTTPService {
         } catch (IOException e) {
             /* create configs file */
         }
+        this.context.setAuths(serverAddress);//memory
     }
 
     /**
@@ -151,7 +152,7 @@ public class HTTPService {
             }//stops if the file is already made, this meas you can call every boot.
 
             auths = auths.replace(' ', ':');//replace spaces with a colon
-            serverAdd = "http://" + serverAdd + "/users";//formating
+            serverAdd = "http://" + serverAdd + ":8080/users";//formating
 
             try (BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))) {//sets on disk
                 in.write("auths:\n" + auths);
@@ -176,6 +177,7 @@ public class HTTPService {
         }
         catch (Exception e){}
     }
+
     public String getAuths(){
         return this.context.getAuths();
     }

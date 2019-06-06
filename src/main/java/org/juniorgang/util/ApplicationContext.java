@@ -47,7 +47,10 @@ public class ApplicationContext {
 
                 switch (temp){
                     case "server:":
-                        serverAdd = sc.nextLine();
+                        try {
+                            serverAdd = sc.nextLine();
+                        }
+                        catch (Exception e){serverAdd = " ";}
                         break;
                     case "auths:":
                         auths = sc.nextLine();
@@ -58,7 +61,8 @@ public class ApplicationContext {
             }
 
         }
-        catch(Exception e){ System.out.println("no configs file found");}
+        catch(Exception e){ e.printStackTrace();
+            System.out.println("no configs file found");}
 
         client = ClientBuilder.newClient();
         WebTarget trg= client.target(serverAdd);
