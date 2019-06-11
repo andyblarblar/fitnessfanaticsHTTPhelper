@@ -167,7 +167,7 @@ public class HTTPService {
     public static void createConfigsFile() {
         File configs = new File("src/main/resources/configs.txt");
         try {
-            if (configs.createNewFile()) {
+            if (!configs.createNewFile()) {
                 return;
             }//stops if the file is already made, this meas you can call every boot.
             try (BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))) {//sets on disk
