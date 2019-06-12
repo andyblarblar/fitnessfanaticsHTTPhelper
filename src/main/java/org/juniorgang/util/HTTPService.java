@@ -130,13 +130,15 @@ public class HTTPService {
     public void setServerAddress(String serverAddress){
         serverAddress = "http://"+serverAddress+":8080/users";//formating
 
+        this.context.setServerAddress(serverAddress);//memory
+
         try(BufferedWriter in = new BufferedWriter(new FileWriter(new File("src/main/resources/configs.txt")))){//sets on disk
             in.write("auths:\n"+this.context.getAuths());//auths
             in.append("\nserver:\n").append(serverAddress);//server
         } catch (IOException e) {
             /* create configs file */
         }
-        this.context.setAuths(serverAddress);//memory
+
     }
 
     /**
